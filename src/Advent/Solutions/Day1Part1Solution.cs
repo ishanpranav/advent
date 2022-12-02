@@ -11,7 +11,7 @@ namespace Advent.Solutions
         private int _sum;
         private int _result;
 
-        public override int Day
+        protected override int Day
         {
             get
             {
@@ -19,7 +19,7 @@ namespace Advent.Solutions
             }
         }
 
-        public override int Result
+        protected override int Result
         {
             get
             {
@@ -27,7 +27,7 @@ namespace Advent.Solutions
             }
         }
 
-        public override void ReadLine(string line)
+        protected override void ReadLine(string line)
         {
             if (string.IsNullOrWhiteSpace(line))
             {

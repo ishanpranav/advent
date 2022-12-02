@@ -10,10 +10,10 @@ namespace Advent.Solutions
 {
     internal abstract class Solution
     {
-        public abstract int Day { get; }
-        public abstract int Result { get; }
+        protected abstract int Day { get; }
+        protected abstract int Result { get; }
 
-        public abstract void ReadLine(string line);
+        protected abstract void ReadLine(string line);
 
         public async Task<int> SolveAsync()
         {
