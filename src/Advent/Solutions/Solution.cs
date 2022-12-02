@@ -8,14 +8,15 @@ using System.Threading.Tasks;
 
 namespace Advent.Solutions
 {
-    internal abstract class Solution
+    public abstract class Solution
     {
-        protected abstract int Day { get; }
-        protected abstract int Result { get; }
+        public abstract int Day { get; }
+        public abstract int Part { get; }
+        public abstract int Result { get; }
 
         protected abstract void ReadLine(string line);
 
-        public async Task<int> SolveAsync()
+        public async Task SolveAsync()
         {
             Stream? stream = typeof(Solution).Assembly.GetManifestResourceStream($"Advent.resources.Day{Day}.txt");
 
@@ -33,8 +34,6 @@ namespace Advent.Solutions
                     ReadLine(line);
                 }
             }
-
-            return Result;
         }
     }
 }

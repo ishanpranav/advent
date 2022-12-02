@@ -4,29 +4,17 @@
 
 namespace Advent.Solutions
 {
-    internal sealed class Day1Part2Solution : Solution
+    public class Day1Part2Solution : Solution
     {
         private int _first;
         private int _second;
         private int _third;
         private int _sum;
 
-        protected override int Day
-        {
-            get
-            {
-                return 1;
-            }
-        }
-
-        protected override int Result
-        {
-            get
-            {
-                return _first + _second + _third;
-            }
-        }
-
+        public override int Day => 1;
+        public override int Part => 2;
+        public override int Result => _first + _second + _third;
+        
         protected override void ReadLine(string line)
         {
             if (string.IsNullOrWhiteSpace(line))

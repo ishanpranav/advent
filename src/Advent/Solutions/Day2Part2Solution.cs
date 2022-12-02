@@ -6,26 +6,14 @@ using System;
 
 namespace Advent.Solutions
 {
-    internal sealed class Day2Part2Solution : Solution
+    public class Day2Part2Solution : Solution
     {
         private int _result;
 
-        protected override int Day
-        {
-            get
-            {
-                return 2;
-            }
-        }
-
-        protected override int Result
-        {
-            get
-            {
-                return _result;
-            }
-        }
-
+        public override int Day => 2;
+        public override int Part => 2;
+        public override int Result => _result;
+        
         protected override void ReadLine(string line)
         {
             _result += line switch
