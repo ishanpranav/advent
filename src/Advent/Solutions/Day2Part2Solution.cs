@@ -1,4 +1,4 @@
-﻿// Ishan Pranav's REBUS: Day2Part1Solution.cs
+﻿// Ishan Pranav's REBUS: Day2Part2Solution.cs
 // Copyright (c) 2021-2022 Ishan Pranav. All rights reserved.
 // Licensed under the MIT License.
 

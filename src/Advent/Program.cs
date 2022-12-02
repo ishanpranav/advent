@@ -1,4 +1,8 @@
-﻿using System;
+﻿// Ishan Pranav's REBUS: Program.cs
+// Copyright (c) 2021-2022 Ishan Pranav. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
 using System.Threading.Tasks;
 using Advent.Solutions;
 
