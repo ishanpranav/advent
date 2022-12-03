@@ -1,21 +1,36 @@
-﻿// Ishan Pranav's REBUS: Day1Part2Solution.cs
-// Copyright (c) 2021-2022 Ishan Pranav. All rights reserved.
+﻿// Ishan Pranav's REBUS: CalorieCountingSolution.cs
+// Copyright (c) 2022 Ishan Pranav. All rights reserved.
 // Licensed under the MIT License.
+
+using System;
 
 namespace Advent.Solutions
 {
-    public class Day1Part2Solution : Solution
+    internal sealed class CalorieCountingSolution : ISolution
     {
+        private int _sum;
+        private int _maxSum;
         private int _first;
         private int _second;
         private int _third;
-        private int _sum;
 
-        public override int Day => 1;
-        public override int Part => 2;
-        public override int Result => _first + _second + _third;
-        
-        protected override void ReadLine(string line)
+        public int Part1
+        {
+            get
+            {
+                return _maxSum;
+            }
+        }
+
+        public int Part2
+        {
+            get
+            {
+                return _first + _second + _third;
+            }
+        }
+
+        public void ReadLine(string line)
         {
             if (string.IsNullOrWhiteSpace(line))
             {
@@ -35,6 +50,7 @@ namespace Advent.Solutions
                     _third = _sum;
                 }
 
+                _maxSum = Math.Max(_maxSum, _sum);
                 _sum = 0;
             }
             else
