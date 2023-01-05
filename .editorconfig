@@ -177,7 +177,7 @@ csharp_space_between_parentheses = false
 csharp_space_between_square_brackets = false
 
 # License header
-file_header_template = Ishan Pranav's REBUS: {fileName}\nCopyright (c) 2022 Ishan Pranav. All rights reserved.\nLicensed under the MIT License.
+file_header_template = Copyright (c) 2022 Ishan Pranav. All rights reserved.\nLicensed under the MIT License.
 
 # Marshaller type must have CustomTypeMarshallerAttribute attribute
 dotnet_diagnostic.SYSLIB1056.severity = silent

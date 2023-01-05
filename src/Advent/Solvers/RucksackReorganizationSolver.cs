@@ -1,30 +1,28 @@
-﻿// Ishan Pranav's REBUS: RucksackReorganizationSolution.cs
-// Copyright (c) 2022 Ishan Pranav. All rights reserved.
+﻿// Copyright (c) 2022 Ishan Pranav. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
 using System.IO;
 using System.Threading.Tasks;
 
-namespace Advent.Solutions;
+namespace Advent.Solvers;
 
-internal sealed class RucksackReorganizationSolution : ISolution
+internal sealed class RucksackReorganizationSolver : ISolver
 {
-    private string? _first;
-    private string? _second;
-
-    public int Part1 { get; private set; }
-    public int Part2 { get; private set; }
-
-    public async Task SolveAsync(TextReader reader)
+    public async Task<Solution> SolveAsync(TextReader reader)
     {
+        int firstPriority = 0;
+        int secondPriority = 0;
+        string? first = null;
+        string? second = null;
+
         do
         {
             string? line = await reader.ReadLineAsync();
 
             if (line is null)
             {
-                return;
+                return new Solution(firstPriority, secondPriority);
             }
 
             int length = line.Length;
@@ -43,13 +41,13 @@ internal sealed class RucksackReorganizationSolution : ISolution
 
             part1();
 
-            if (_first is null)
+            if (first is null)
             {
-                _first = line;
+                first = line;
             }
-            else if (_second is null)
+            else if (second is null)
             {
-                _second = line;
+                second = line;
             }
             else
             {
@@ -58,7 +56,7 @@ internal sealed class RucksackReorganizationSolution : ISolution
 
                 do
                 {
-                    if (_first.Contains(item) && _second.Contains(item))
+                    if (first.Contains(item) && second.Contains(item))
                     {
                         break;
                     }
@@ -68,9 +66,9 @@ internal sealed class RucksackReorganizationSolution : ISolution
                 }
                 while (index < length);
 
-                Part2 += getPriority(item);
-                _first = null;
-                _second = null;
+                secondPriority += getPriority(item);
+                first = null;
+                second = null;
             }
 
             void part1()
@@ -83,7 +81,7 @@ internal sealed class RucksackReorganizationSolution : ISolution
                     {
                         if (line[right] == item)
                         {
-                            Part1 += getPriority(item);
+                            firstPriority += getPriority(item);
 
                             return;
                         }

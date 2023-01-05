@@ -1,20 +1,18 @@
-﻿// Ishan Pranav's REBUS: CampCleanupSolution.cs
-// Copyright (c) 2022 Ishan Pranav. All rights reserved.
+﻿// Copyright (c) 2022 Ishan Pranav. All rights reserved.
 // Licensed under the MIT License.
 
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Advent.Solutions;
+namespace Advent.Solvers;
 
-internal sealed class CampCleanupSolution : ISolution
+internal sealed class CampCleanupSolver : ISolver
 {
-    public int Part1 { get; private set; }
-    public int Part2 { get; private set; }
-
-    public Task SolveAsync(TextReader reader)
+    public Task<Solution> SolveAsync(TextReader reader)
     {
+        int containments = 0;
+        int overlaps = 0;
         int index = 0;
         int[] bounds = new int[4];
         StringBuilder builder = new StringBuilder();
@@ -25,7 +23,7 @@ internal sealed class CampCleanupSolution : ISolution
 
             if (read is -1)
             {
-                return Task.CompletedTask;
+                return Task.FromResult(new Solution(containments, overlaps));
             }
 
             char symbol = (char)read;
@@ -50,15 +48,15 @@ internal sealed class CampCleanupSolution : ISolution
                 int start2 = bounds[2];
                 int end1 = bounds[1];
                 int end2 = bounds[3];
-                
-                if ((start1 <= start2 && end2 <= end1) || (start1 >= start2 && end2 >= end1))
-                {
-                    Part1++;
-                }
 
                 if (start1 <= end2 && end1 >= start2)
                 {
-                    Part2++;
+                    overlaps++;
+
+                    if ((start1 <= start2 && end2 <= end1) || (start1 >= start2 && end2 >= end1))
+                    {
+                        containments++;
+                    }
                 }
             }
         }

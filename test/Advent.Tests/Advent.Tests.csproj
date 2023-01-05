@@ -13,6 +13,7 @@
     <None Remove="resources\2022_day_3.txt" />
     <None Remove="resources\2022_day_3_input.txt" />
     <None Remove="resources\2022_day_4_input.txt" />
+    <None Remove="resources\2022_day_5_input.txt" />
   </ItemGroup>
 
   <ItemGroup>
@@ -22,6 +23,7 @@
     <EmbeddedResource Include="resources\2022_day_2_input.txt" />
     <EmbeddedResource Include="resources\2022_day_3_input.txt" />
     <EmbeddedResource Include="resources\2022_day_4_input.txt" />
+    <EmbeddedResource Include="resources\2022_day_5_input.txt" />
   </ItemGroup>
 
   <ItemGroup>
