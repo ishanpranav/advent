@@ -3,18 +3,27 @@
 // Licensed under the MIT License.
 
 using System;
+using System.IO;
+using System.Threading.Tasks;
 
-namespace Advent.Solutions
+namespace Advent.Solutions;
+
+internal sealed class RockPaperScissorsSolution : ISolution
 {
-    internal sealed class RockPaperScissorsSolution : ISolution
-    {
-        public int Part1 { get; private set; }
-        public int Part2 { get; private set; }
+    public int Part1 { get; private set; }
+    public int Part2 { get; private set; }
 
-        public void ReadLine(string line)
+    public async Task SolveAsync(TextReader reader)
+    {
+        do
         {
+            string? line = await reader.ReadLineAsync();
+
             switch (line)
             {
+                case null:
+                    return;
+
                 case "A X":
                     Part1 += 4;
                     Part2 += 3;
@@ -64,5 +73,6 @@ namespace Advent.Solutions
                     throw new FormatException();
             }
         }
+        while (true);
     }
 }

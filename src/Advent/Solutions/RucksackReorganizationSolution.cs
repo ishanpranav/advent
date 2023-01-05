@@ -3,19 +3,30 @@
 // Licensed under the MIT License.
 
 using System;
+using System.IO;
+using System.Threading.Tasks;
 
-namespace Advent.Solutions
+namespace Advent.Solutions;
+
+internal sealed class RucksackReorganizationSolution : ISolution
 {
-    internal sealed class RucksackReorganizationSolution : ISolution
+    private string? _first;
+    private string? _second;
+
+    public int Part1 { get; private set; }
+    public int Part2 { get; private set; }
+
+    public async Task SolveAsync(TextReader reader)
     {
-        private string? _first;
-        private string? _second;
-
-        public int Part1 { get; private set; }
-        public int Part2 { get; private set; }
-
-        public void ReadLine(string line)
+        do
         {
+            string? line = await reader.ReadLineAsync();
+
+            if (line is null)
+            {
+                return;
+            }
+
             int length = line.Length;
 
             if (length < 2)
@@ -25,48 +36,23 @@ namespace Advent.Solutions
 
             int quotient = Math.DivRem(length, 2, out int remainder);
 
-            if (remainder == 1)
+            if (remainder is 1)
             {
                 throw new FormatException();
             }
 
-            readLinePart1();
-            readLinePart2();
+            part1();
 
-            void readLinePart1()
+            if (_first is null)
             {
-                for (int left = 0; left < quotient; left++)
-                {
-                    char item = line[left];
-
-                    for (int right = length - 1; right >= quotient; right--)
-                    {
-                        if (line[right] == item)
-                        {
-                            Part1 += getPriority(item);
-
-                            return;
-                        }
-                    }
-                }
+                _first = line;
             }
-
-            void readLinePart2()
+            else if (_second is null)
             {
-                if (_first is null)
-                {
-                    _first = line;
-
-                    return;
-                }
-
-                if (_second is null)
-                {
-                    _second = line;
-
-                    return;
-                }
-
+                _second = line;
+            }
+            else
+            {
                 int index = 0;
                 char item = line[0];
 
@@ -87,6 +73,24 @@ namespace Advent.Solutions
                 _second = null;
             }
 
+            void part1()
+            {
+                for (int left = 0; left < quotient; left++)
+                {
+                    char item = line[left];
+
+                    for (int right = length - 1; right >= quotient; right--)
+                    {
+                        if (line[right] == item)
+                        {
+                            Part1 += getPriority(item);
+
+                            return;
+                        }
+                    }
+                }
+            }
+
             static int getPriority(char item)
             {
                 return item switch
@@ -97,5 +101,6 @@ namespace Advent.Solutions
                 };
             }
         }
+        while (true);
     }
 }

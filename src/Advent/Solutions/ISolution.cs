@@ -2,13 +2,15 @@
 // Copyright (c) 2022 Ishan Pranav. All rights reserved.
 // Licensed under the MIT License.
 
-namespace Advent.Solutions
-{
-    internal interface ISolution
-    {
-        int Part1 { get; }
-        int Part2 { get; }
+using System.IO;
+using System.Threading.Tasks;
 
-        void ReadLine(string line);
-    }
+namespace Advent.Solutions;
+
+internal interface ISolution
+{
+    int Part1 { get; }
+    int Part2 { get; }
+
+    Task SolveAsync(TextReader reader);
 }

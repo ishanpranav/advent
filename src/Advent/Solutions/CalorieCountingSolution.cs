@@ -3,35 +3,39 @@
 // Licensed under the MIT License.
 
 using System;
+using System.IO;
+using System.Threading.Tasks;
 
-namespace Advent.Solutions
+namespace Advent.Solutions;
+
+internal sealed class CalorieCountingSolution : ISolution
 {
-    internal sealed class CalorieCountingSolution : ISolution
+    private int _sum;
+    private int _first;
+    private int _second;
+    private int _third;
+
+    public int Part1 { get; private set; }
+
+    public int Part2
     {
-        private int _sum;
-        private int _maxSum;
-        private int _first;
-        private int _second;
-        private int _third;
-
-        public int Part1
+        get
         {
-            get
-            {
-                return _maxSum;
-            }
+            return _first + _second + _third;
         }
+    }
 
-        public int Part2
+    public async Task SolveAsync(TextReader reader)
+    {
+        do
         {
-            get
+            string? line = await reader.ReadLineAsync();
+
+            if (line is null)
             {
-                return _first + _second + _third;
+                return;
             }
-        }
 
-        public void ReadLine(string line)
-        {
             if (string.IsNullOrWhiteSpace(line))
             {
                 if (_sum > _first)
@@ -50,7 +54,7 @@ namespace Advent.Solutions
                     _third = _sum;
                 }
 
-                _maxSum = Math.Max(_maxSum, _sum);
+                Part1 = Math.Max(Part1, _sum);
                 _sum = 0;
             }
             else
@@ -58,5 +62,6 @@ namespace Advent.Solutions
                 _sum += int.Parse(line);
             }
         }
+        while (true);
     }
 }

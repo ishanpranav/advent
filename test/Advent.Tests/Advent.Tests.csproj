@@ -7,17 +7,21 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="resources\2022_day_1.txt" />
+    <None Remove="resources\2022_day_1_input.txt" />
     <None Remove="resources\2022_day_2.txt" />
+    <None Remove="resources\2022_day_2_input.txt" />
     <None Remove="resources\2022_day_3.txt" />
+    <None Remove="resources\2022_day_3_input.txt" />
+    <None Remove="resources\2022_day_4_input.txt" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="resources\2022_day_1.txt">
+    <EmbeddedResource Include="resources\2022_day_1_input.txt">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="resources\2022_day_2.txt" />
-    <EmbeddedResource Include="resources\2022_day_3.txt" />
+    <EmbeddedResource Include="resources\2022_day_2_input.txt" />
+    <EmbeddedResource Include="resources\2022_day_3_input.txt" />
+    <EmbeddedResource Include="resources\2022_day_4_input.txt" />
   </ItemGroup>
 
   <ItemGroup>
@@ -28,7 +32,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\Advent\Advent.csproj" />
+    <ProjectReference Include="..\..\src\Advent\Advent.csproj" />
   </ItemGroup>
 
 </Project>
