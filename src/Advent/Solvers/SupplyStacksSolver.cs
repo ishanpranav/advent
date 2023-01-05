@@ -28,13 +28,14 @@ internal sealed class SupplyStacksSolver : ISolver
         const int crateLength = 4;
 
         int count = (line.Length + 1) / crateLength;
-        LinkedList<char>[] firstStacks = new LinkedList<char>[count];
-        LinkedList<char>[] secondStacks = new LinkedList<char>[count];
+        Deque<char>[] firstStacks = new Deque<char>[count];
+        Deque<char>[] secondStacks = new Deque<char>[count];
+        Stack<char> craneStack = new Stack<char>();
 
         for (int i = 0; i < count; i++)
         {
-            firstStacks[i] = new LinkedList<char>();
-            secondStacks[i] = new LinkedList<char>();
+            firstStacks[i] = new Deque<char>();
+            secondStacks[i] = new Deque<char>();
         }
 
         while (!string.IsNullOrWhiteSpace(line))
@@ -51,10 +52,6 @@ internal sealed class SupplyStacksSolver : ISolver
             line = await reader.ReadLineAsync();
         }
 
-        LinkedListNode<char>? firstTop;
-        LinkedListNode<char>? secondTop;
-        Stack<char> craneStack = new Stack<char>();
-
         do
         {
             line = await reader.ReadLineAsync();
@@ -68,33 +65,17 @@ internal sealed class SupplyStacksSolver : ISolver
             int moves = int.Parse(match.Groups[1].Value);
             int source = int.Parse(match.Groups[2].Value) - 1;
             int target = int.Parse(match.Groups[3].Value) - 1;
-            LinkedList<char> firstStack = firstStacks[source];
-            LinkedList<char> secondStack = secondStacks[source];
+            Deque<char> secondStack = secondStacks[target];
 
             for (int i = 0; i < moves; i++)
             {
-                firstTop = firstStack.First;
-                secondTop = secondStack.First;
-
-                if (firstTop is null || secondTop is null)
-                {
-                    throw new FormatException();
-                }
-
-                char firstCrate = firstTop.Value;
-
-                firstStack.RemoveFirst();
-                firstStacks[target].AddFirst(firstCrate);
-
-                char secondCrate = secondTop.Value;
-
-                secondStack.RemoveFirst();
-                craneStack.Push(secondCrate);
+                firstStacks[target].AddFirst(firstStacks[source].RemoveFirst());
+                craneStack.Push(secondStacks[source].RemoveFirst());
             }
 
             for (int i = 0; i < moves; i++)
             {
-                secondStacks[target].AddFirst(craneStack.Pop());
+                secondStack.AddFirst(craneStack.Pop());
             }
         }
         while (true);
@@ -104,16 +85,8 @@ internal sealed class SupplyStacksSolver : ISolver
 
         for (int i = 0; i < count; i++)
         {
-            firstTop = firstStacks[i].First;
-            secondTop = secondStacks[i].First;
-
-            if (firstTop is null || secondTop is null)
-            {
-                throw new FormatException();
-            }
-
-            firstTops[i] = firstTop.Value;
-            secondTops[i] = secondTop.Value;
+            firstTops[i] = firstStacks[i].First;
+            secondTops[i] = secondStacks[i].First;
         }
 
         return new Solution(new string(firstTops), new string(secondTops));

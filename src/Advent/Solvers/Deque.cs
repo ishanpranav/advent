@@ -5,12 +5,11 @@ using System.Runtime.CompilerServices;
 
 namespace System.Collections.Generic;
 
-public class Deque<T> : IReadOnlyCollection<T>
+internal sealed class Deque<T> : IReadOnlyCollection<T>
 {
     private int _head;
     private int _tail;
     private int _version;
-    private int _count;
     private T[] _buffer;
 
     public Deque()
@@ -19,17 +18,8 @@ public class Deque<T> : IReadOnlyCollection<T>
     }
 
     /// <inheritdoc/>
-    public int Count
-    {
-        get
-        {
-            return _count;
-        }
-    }
+    public int Count { get; private set; }
 
-    /// <summary>
-    /// set: O(n)
-    /// </summary>
     public int Capacity
     {
         get
@@ -38,7 +28,7 @@ public class Deque<T> : IReadOnlyCollection<T>
         }
         set
         {
-            if (value < _count || value > Array.MaxLength)
+            if (value < Count || value > Array.MaxLength)
             {
                 throw new ArgumentOutOfRangeException(nameof(value));
             }
@@ -51,11 +41,11 @@ public class Deque<T> : IReadOnlyCollection<T>
             {
                 T[] buffer = new T[value];
 
-                if (_count > 0)
+                if (Count > 0)
                 {
                     if (_head < _tail)
                     {
-                        Array.Copy(_buffer, _head, buffer, destinationIndex: 0, _count);
+                        Array.Copy(_buffer, _head, buffer, destinationIndex: 0, Count);
                     }
                     else
                     {
@@ -69,13 +59,13 @@ public class Deque<T> : IReadOnlyCollection<T>
                 _buffer = buffer;
             }
 
-            if (_count == Capacity)
+            if (Count == Capacity)
             {
                 _tail = 0;
             }
             else
             {
-                _tail = _count;
+                _tail = Count;
             }
 
             _head = 0;
@@ -87,7 +77,7 @@ public class Deque<T> : IReadOnlyCollection<T>
     {
         get
         {
-            if (_count is 0)
+            if (Count is 0)
             {
                 throw new InvalidOperationException();
             }
@@ -100,7 +90,7 @@ public class Deque<T> : IReadOnlyCollection<T>
     {
         get
         {
-            if (_count is 0)
+            if (Count is 0)
             {
                 throw new InvalidOperationException();
             }
@@ -111,28 +101,28 @@ public class Deque<T> : IReadOnlyCollection<T>
 
     public void AddFirst(T item)
     {
-        if (_count == Capacity)
+        if (Count == Capacity)
         {
-            Grow(_count + 1);
+            Grow(Count + 1);
         }
 
         _head = (_head + Capacity - 1) % Capacity;
         _buffer[_head] = item;
         _version++;
-        _count++;
+        Count++;
     }
 
     public void AddLast(T item)
     {
-        if (_count == Capacity)
+        if (Count == Capacity)
         {
-            Grow(_count + 1);
+            Grow(Count + 1);
         }
 
         _buffer[_tail] = item;
         _tail++;
         _version++;
-        _count++;
+        Count++;
 
         if (_tail == Capacity)
         {
@@ -140,12 +130,6 @@ public class Deque<T> : IReadOnlyCollection<T>
         }
     }
 
-    /// <summary>
-    /// O(n)
-    /// </summary>
-    /// <param name="capacity"></param>
-    /// <returns></returns>
-    /// <exception cref="ArgumentOutOfRangeException"></exception>
     public int EnsureCapacity(int capacity)
     {
         if (capacity < 0)
@@ -177,7 +161,7 @@ public class Deque<T> : IReadOnlyCollection<T>
 
     public T RemoveFirst()
     {
-        if (_count is 0)
+        if (Count is 0)
         {
             throw new InvalidOperationException();
         }
@@ -191,7 +175,7 @@ public class Deque<T> : IReadOnlyCollection<T>
 
         _head++;
         _version++;
-        _count--;
+        Count--;
 
         if (_head == Capacity)
         {
@@ -203,13 +187,13 @@ public class Deque<T> : IReadOnlyCollection<T>
 
     public T RemoveLast()
     {
-        if (_count is 0)
+        if (Count is 0)
         {
             throw new InvalidOperationException();
         }
 
         _tail = (_tail + Capacity - 1) % Capacity;
-        _count--;
+        Count--;
         _version++;
 
         T result = _buffer[_tail];
@@ -222,21 +206,16 @@ public class Deque<T> : IReadOnlyCollection<T>
         return result;
     }
 
-    /// <summary>
-    /// O(n)
-    /// </summary>
-    /// <param name="item"></param>
-    /// <returns></returns>
     public bool Contains(T item)
     {
-        if (_count is 0)
+        if (Count is 0)
         {
             return false;
         }
 
         if (_head < _tail)
         {
-            return Array.IndexOf(_buffer, item, _head, _count) is not -1;
+            return Array.IndexOf(_buffer, item, _head, Count) is not -1;
         }
 
         return Array.IndexOf(_buffer, item, _head, Capacity - _head) is not -1 || Array.IndexOf(_buffer, item, 0, _tail) is not -1;
@@ -244,7 +223,7 @@ public class Deque<T> : IReadOnlyCollection<T>
 
     public void Clear()
     {
-        if (_count is 0)
+        if (Count is 0)
         {
             return;
         }
@@ -253,7 +232,7 @@ public class Deque<T> : IReadOnlyCollection<T>
         {
             if (_head < _tail)
             {
-                Array.Clear(_buffer, _head, _count);
+                Array.Clear(_buffer, _head, Count);
             }
             else
             {
@@ -265,7 +244,7 @@ public class Deque<T> : IReadOnlyCollection<T>
         _head = 0;
         _tail = 0;
         _version++;
-        _count = 0;
+        Count = 0;
     }
 
     /// <inheritdoc/>
@@ -275,11 +254,11 @@ public class Deque<T> : IReadOnlyCollection<T>
 
         if (_head < _tail)
         {
-            for (int i = _head; i < _count - _head; i++)
+            for (int i = 0; i < Count; i++)
             {
                 assert();
 
-                yield return _buffer[i];
+                yield return _buffer[_head + i];
             }
         }
         else
