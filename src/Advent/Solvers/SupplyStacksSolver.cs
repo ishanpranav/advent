@@ -74,7 +74,6 @@ internal sealed class SupplyStacksSolver : ISolver
             int moves = int.Parse(match.Groups[1].Value);
             int source = int.Parse(match.Groups[2].Value) - 1;
             int target = int.Parse(match.Groups[3].Value) - 1;
-            Deque<char> secondStack = secondStacks[target];
 
             for (int i = 0; i < moves; i++)
             {
@@ -84,7 +83,7 @@ internal sealed class SupplyStacksSolver : ISolver
 
             for (int i = 0; i < moves; i++)
             {
-                secondStack.AddFirst(craneStack.Pop());
+                secondStacks[target].AddFirst(craneStack.Pop());
             }
         }
         while (true);
