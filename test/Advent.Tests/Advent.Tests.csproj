@@ -14,6 +14,8 @@
     <None Remove="resources\2022_day_3_input.txt" />
     <None Remove="resources\2022_day_4_input.txt" />
     <None Remove="resources\2022_day_5_input.txt" />
+    <None Remove="resources\2022_day_6_input.txt" />
+    <None Remove="resources\2022_day_7_input.txt" />
   </ItemGroup>
 
   <ItemGroup>
@@ -24,6 +26,8 @@
     <EmbeddedResource Include="resources\2022_day_3_input.txt" />
     <EmbeddedResource Include="resources\2022_day_4_input.txt" />
     <EmbeddedResource Include="resources\2022_day_5_input.txt" />
+    <EmbeddedResource Include="resources\2022_day_6_input.txt" />
+    <EmbeddedResource Include="resources\2022_day_7_input.txt" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,11 +1,14 @@
 ﻿// Copyright (c) 2022 Ishan Pranav. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
-namespace System.Collections.Generic;
+namespace Advent;
 
-internal sealed class Deque<T> : IReadOnlyCollection<T>
+public class Deque<T> : IReadOnlyCollection<T>
 {
     private int _head;
     private int _tail;

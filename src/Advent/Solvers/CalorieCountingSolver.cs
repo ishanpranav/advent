@@ -24,8 +24,7 @@ internal sealed class CalorieCountingSolver : ISolver
             {
                 return new Solution(max, first + second + third);
             }
-
-            if (string.IsNullOrWhiteSpace(line))
+            else if (string.IsNullOrWhiteSpace(line))
             {
                 if (sum > first)
                 {

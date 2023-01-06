@@ -7,7 +7,7 @@ namespace Advent.Solvers;
 
 internal class Solution : IEquatable<Solution>
 {
-    public static readonly Solution None = new Solution(first: 0, second: 0);
+    public static readonly Solution None = new Solution(double.NaN, double.NaN);
 
     public object First { get; }
     public object Second { get; }
@@ -34,5 +34,10 @@ internal class Solution : IEquatable<Solution>
     public override int GetHashCode()
     {
         return HashCode.Combine(First, Second);
+    }
+
+    public override string ToString()
+    {
+        return $"({First}, {Second})";
     }
 }

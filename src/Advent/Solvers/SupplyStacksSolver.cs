@@ -58,7 +58,16 @@ internal sealed class SupplyStacksSolver : ISolver
 
             if (string.IsNullOrWhiteSpace(line))
             {
-                break;
+                char[] firstTops = new char[count];
+                char[] secondTops = new char[count];
+
+                for (int i = 0; i < count; i++)
+                {
+                    firstTops[i] = firstStacks[i].First;
+                    secondTops[i] = secondStacks[i].First;
+                }
+
+                return new Solution(new string(firstTops), new string(secondTops));
             }
 
             Match match = s_moveRegex.Match(line);
@@ -79,16 +88,5 @@ internal sealed class SupplyStacksSolver : ISolver
             }
         }
         while (true);
-
-        char[] firstTops = new char[count];
-        char[] secondTops = new char[count];
-
-        for (int i = 0; i < count; i++)
-        {
-            firstTops[i] = firstStacks[i].First;
-            secondTops[i] = secondStacks[i].First;
-        }
-
-        return new Solution(new string(firstTops), new string(secondTops));
     }
 }
